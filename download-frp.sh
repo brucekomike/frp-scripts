@@ -50,7 +50,8 @@ main() {
 
     if [ $? -eq 0 ]; then
         echo "Download complete: $FILENAME"
-        echo "You can now extract it using: tar -xzf $FILENAME"
+        echo "extracting it using: tar -xzf $FILENAME"
+        tar -xzf $FILENAME
     else
         echo "Error: Download failed."
         echo "Please check the URL or your network connection."
@@ -58,10 +59,6 @@ main() {
 }
 
 
-# Define variables
-SERVICE_NAME="frps"
-SERVICE_FILE="/etc/systemd/system/${SERVICE_NAME}.service"
-FRP_DIR="$HOME/Workspace/frp" # Recommended directory for frp binaries and config
 
 mkdir -p ~/Workspace
 cd ~/Workspace

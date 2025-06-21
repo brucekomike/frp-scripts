@@ -2,6 +2,8 @@
 
 export FRP_DIR=$HOME/Workspace/frp
 # Create the systemd service file
+SERVICE_NAME="frps"
+SERVICE_FILE="/etc/systemd/system/${SERVICE_NAME}.service"
 echo "Creating systemd service file: $SERVICE_FILE"
 sudo bash -c "cat << EOF | sudo tee $SERVICE_FILE &> /dev/null
 [Unit]
