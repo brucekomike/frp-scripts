@@ -13,7 +13,7 @@ Wants = network.target
 
 [Service]
 Type = simple
-User = $USER
+User = root
 ExecStart = $FRP_DIR/frps -c $FRP_DIR/frps.toml
 Restart = on-failure
 RestartSec = 5s
@@ -60,10 +60,14 @@ allowPorts = [
   { single = 443 },
   { start = 20000, end = 30000 }
 ]
-log.to = "frps.log"
+log.to = "./frps.log"
 log.level = "info"
 log.maxDays = 7
-
+custom404Page = "./404.html
+# sshTunnelGateway.bindPort = 12022
+# sshTunnelGateway.privateKeyFile = "$HOME/.ssh/id_rsa"
+# sshTunnelGateway.autoGenPrivateKeyPath = ""
+# sshTunnelGateway.authorizedKeysFile = "$HOME/.ssh/authorized_keys"
 EOF
 echo "Generated '$TOML_FILE' with a new authentication token."
 echo "Authentication Token: $GENERATED_TOKEN"

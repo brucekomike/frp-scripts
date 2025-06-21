@@ -68,8 +68,6 @@ customDomains = ["your-domain.local"]
 transport.useEncryption = true
 transport.useCompression = true
 
-
-
 [[proxies]]
 name = "https"
 type = "https"
@@ -78,7 +76,17 @@ localPort = 443
 customDomains = ["your-domain.local"]
 transport.useEncryption = true
 transport.useCompression = true
-root@frp:~# 
+
+[[proxies]]
+name = "ssh"
+type = "tcp"
+localIP = "127.0.0.1"
+localPort = 22
+remotePort = 22222
+customDomains = ["your-domain.local"]
+transport.useEncryption = true
+transport.useCompression = true
+
 EOF
 
 echo "Generated '$TOML_FILE' with a new authentication token."
