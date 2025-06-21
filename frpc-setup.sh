@@ -51,35 +51,34 @@ user = "$HOSTNAME"
 
 auth.method = "token"
 auth.token = "$AUTH_TOKEN"
-serverAddr = "SERVER.local"
+serverAddr = "your-server.local"
 serverPort = 12048
-
-[[proxies]]
-name = "http"
-remotePort = 80 
-localPort = 80
-
-localIP = "127.0.0.1"
-type = "http"
-transport.useEncryption = true
-transport.useCompression = true
-healthCheck.type = "tcp"
-healthCheck.timeoutSeconds = 3
-healthCheck.maxFailed = 3
-healthCheck.intervalSeconds = 10
-
-[[proxies]]
-name = "https"
-type = "https"
-localIP = "127.0.0.1"
-
-localPort = 443
-remotePort = 443
 # Logging settings
 log.to = "./frpc.log"
 # trace, debug, info, warn, error
 log.level = "info"
 log.maxDays = 7
+
+[[proxies]]
+name = "http"
+type = "http"
+localIP = "127.0.0.1"
+localPort = 80
+customDomains = ["your-domain.local"]
+transport.useEncryption = true
+transport.useCompression = true
+
+
+
+[[proxies]]
+name = "https"
+type = "https"
+localIP = "127.0.0.1"
+localPort = 443
+customDomains = ["your-domain.local"]
+transport.useEncryption = true
+transport.useCompression = true
+root@frp:~# 
 EOF
 
 echo "Generated '$TOML_FILE' with a new authentication token."
