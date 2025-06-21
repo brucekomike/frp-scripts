@@ -48,25 +48,22 @@ GENERATED_TOKEN=$(generate_token)
 
 # Create the frps.toml content
 cat << EOF > "$TOML_FILE"
-# frps.toml - FRP Server Configuration
-
-# Basic server settings
 bindAddr = "0.0.0.0"
-bindPort =12048
+bindPort = 12048
 kcpBindPort = 12048
-# Authentication settings
 auth.method = "token"
 auth.token = "$GENERATED_TOKEN"
-
-# proxy setting
-vhostHTTPPort=80
-vhostHTTPSPort=443
-allowPorts=[80,443,20000-30000]
-# Logging settings
-log.to = "./frps.log"
-# trace, debug, info, warn, error
+vhostHTTPPort = 80
+vhostHTTPSPort = 443
+allowPorts = [
+  { single = 80 },
+  { single = 443 },
+  { start = 20000, end = 30000 }
+]
+log.to = "frps.log"
 log.level = "info"
 log.maxDays = 7
+
 EOF
 echo "Generated '$TOML_FILE' with a new authentication token."
 echo "Authentication Token: $GENERATED_TOKEN"

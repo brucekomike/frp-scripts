@@ -20,7 +20,7 @@ RestartSec = 5s
 
 [Install]
 WantedBy = multi-user.target
-EOF"
+EOF
 
 # Reload systemd daemon, enable and start the service
 echo "Reloading systemd daemon..."
@@ -47,10 +47,7 @@ AUTH_TOKEN=${AUTH_TOKEN:-$(generate_token)}
 
 # Create the frps.toml content
 cat << EOF > "$TOML_FILE"
-# frpc.toml - FRP Client Configuration
 user = "$HOSTNAME"
-
-# Basic client settings
 
 auth.method = "token"
 auth.token = "$AUTH_TOKEN"
