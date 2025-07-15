@@ -1,5 +1,14 @@
 #!/bin/bash
 
+# Determine if sudo is needed
+if [ "$(id -u)" -eq 0 ]; then
+    # User is root, no sudo needed
+    sudo=""
+else
+    # User is not root, use sudo
+    sudo="sudo"
+fi
+
 # --- Configuration Variables ---
 # Base directory for frp binaries and configuration
 export FRP_DIR="$HOME/Workspace/frp"
@@ -17,7 +26,7 @@ mkdir -p "$FRP_DIR"
 
 echo "Creating SysV init script: $SERVICE_FILE"
 # Create the SysV init script content
-cat << EOF | sudo tee "$SERVICE_FILE" &> /dev/null
+cat << EOF | $sudo tee "$SERVICE_FILE" &> /dev/null
 #!/bin/sh
 ### BEGIN INIT INFO
 # Provides:          ${SERVICE_NAME}
@@ -119,16 +128,16 @@ exit 0
 EOF
 
 echo "Setting permissions for $SERVICE_FILE..."
-sudo chmod +x "$SERVICE_FILE"
+$sudo chmod +x "$SERVICE_FILE"
 
 echo "Enabling $SERVICE_NAME service to start on boot..."
 # Check for update-rc.d (Debian/Ubuntu) or chkconfig (RHEL/CentOS)
 if command -v update-rc.d &> /dev/null; then
-    sudo update-rc.d "$SERVICE_NAME" defaults
+    $sudo update-rc.d "$SERVICE_NAME" defaults
     echo "Used update-rc.d for service management."
 elif command -v chkconfig &> /dev/null; then
-    sudo chkconfig --add "$SERVICE_NAME"
-    sudo chkconfig "$SERVICE_NAME" on
+    $sudo chkconfig --add "$SERVICE_NAME"
+    $sudo chkconfig "$SERVICE_NAME" on
     echo "Used chkconfig for service management."
 else
     echo "Warning: Neither update-rc.d nor chkconfig found. You may need to manually enable the service."
@@ -137,7 +146,7 @@ fi
 
 echo "Service creation complete. "
 echo "You can start service by:"
-echo "sudo service $SERVICE_NAME start"
+echo "$sudo service $SERVICE_NAME start" # This line is just an echo, so it's adjusted for consistency in display
 echo "Remember to configure your frps.toml file properly."
 
 # Define the output file for frpc.toml
