@@ -150,7 +150,9 @@ echo "$sudo service $SERVICE_NAME start" # This line is just an echo, so it's ad
 echo "Remember to configure your frps.toml file properly."
 
 # Define the output file for frpc.toml
+mkdir "$FRP_DIR/conf.d"
 TOML_FILE="$FRP_DIR/frpc.toml"
+TOML_FILE_sub="$FRP_DIR/conf.d/site.toml.temp"
 
 # Function to generate a random token
 generate_token() {

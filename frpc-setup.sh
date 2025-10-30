@@ -34,8 +34,9 @@ echo "systemctl start $SERVICE_NAME"
 echo "Remember to configure your frps.toml file properly."
 
 # Define the output file
+mkdir "$FRP_DIR/conf.d"
 TOML_FILE="$FRP_DIR/frpc.toml"
-TOML_FILE_sub="$FRP_DIR/frpc.toml"
+TOML_FILE_sub="$FRP_DIR/conf.d/site.toml.temp"
 
 # Function to generate a random token
 generate_token() {
