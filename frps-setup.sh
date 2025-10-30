@@ -35,7 +35,7 @@ echo "systemctl start $SERVICE_NAME"
 echo "Remember to configure your frps.toml file properly."
 
 # Define the output file
-TOML_FILE="$HOME/Workspace/frp/frps.toml"
+TOML_FILE="$FRP_DIR/frps.toml"
 
 # Function to generate a random token
 generate_token() {
@@ -60,7 +60,7 @@ allowPorts = [
   { single = 443 },
   { start = 20000, end = 30000 }
 ]
-log.to = "./frps.log"
+log.to = "$FRP_DIR/frps.log"
 log.level = "info"
 log.maxDays = 7
 custom404Page = "./404.html

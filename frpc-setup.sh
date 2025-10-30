@@ -34,7 +34,8 @@ echo "systemctl start $SERVICE_NAME"
 echo "Remember to configure your frps.toml file properly."
 
 # Define the output file
-TOML_FILE="$HOME/Workspace/frp/frpc.toml"
+TOML_FILE="$FRP_DIR/frpc.toml"
+TOML_FILE_sub="$FRP_DIR/frpc.toml"
 
 # Function to generate a random token
 generate_token() {
@@ -54,11 +55,14 @@ auth.token = "$AUTH_TOKEN"
 serverAddr = "your-server.local"
 serverPort = 12048
 # Logging settings
-log.to = "./frpc.log"
+log.to = "$HFRP_DIR/frpc.log"
 # trace, debug, info, warn, error
 log.level = "info"
 log.maxDays = 7
+includes = [ "$FRP_DIR/conf.d/*.toml" ]
+EOF
 
+cat << EOF > "$TOML_FILE_sub"
 [[proxies]]
 name = "http"
 type = "http"
