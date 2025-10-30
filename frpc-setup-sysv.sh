@@ -170,11 +170,14 @@ auth.token = "$AUTH_TOKEN"
 serverAddr = "your-server.local"
 serverPort = 12048
 # Logging settings
-log.to = "$FRP_DIR/frpc.log" # Absolute path for logs
+log.to = "$HFRP_DIR/frpc.log"
 # trace, debug, info, warn, error
 log.level = "info"
 log.maxDays = 7
+includes = [ "$FRP_DIR/conf.d/*.toml" ]
+EOF
 
+cat << EOF > "$TOML_FILE_sub"
 [[proxies]]
 name = "http"
 type = "http"

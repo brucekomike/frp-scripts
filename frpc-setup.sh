@@ -46,7 +46,7 @@ generate_token() {
 # Generate the token
 AUTH_TOKEN=${AUTH_TOKEN:-$(generate_token)}
 
-# Create the frps.toml content
+# Create the frpc.toml content
 cat << EOF > "$TOML_FILE"
 user = "$HOSTNAME"
 
