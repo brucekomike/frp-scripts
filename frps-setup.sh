@@ -1,6 +1,11 @@
 #!/bin/bash
 
 export FRP_DIR=$HOME/Workspace/frp
+
+if [ ! -d $FRP_DIR ]; then
+    ./download-frp.sh
+fi
+
 # Create the systemd service file
 SERVICE_NAME="frps"
 SERVICE_FILE="/etc/systemd/system/${SERVICE_NAME}.service"
@@ -42,6 +47,8 @@ generate_token() {
     # Generate a random string of 32 alphanumeric characters
     head /dev/urandom | tr -dc A-Za-z0-9_.- | head -c 32
 }
+# copy the 404.html
+cp ./404.html $FRP_DIR
 
 # Generate the token
 GENERATED_TOKEN=$(generate_token)
@@ -63,12 +70,13 @@ allowPorts = [
 log.to = "$FRP_DIR/frps.log"
 log.level = "info"
 log.maxDays = 7
-custom404Page = "./404.html
+custom404Page = "$FRP_DIR/404.html"
 # sshTunnelGateway.bindPort = 12022
 # sshTunnelGateway.privateKeyFile = "$HOME/.ssh/id_rsa"
 # sshTunnelGateway.autoGenPrivateKeyPath = ""
 # sshTunnelGateway.authorizedKeysFile = "$HOME/.ssh/authorized_keys"
 EOF
+
 echo "Generated '$TOML_FILE' with a new authentication token."
 echo "Authentication Token: $GENERATED_TOKEN"
 echo "Please keep this token secure and use it in your frpc.toml client configuration."

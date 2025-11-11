@@ -1,6 +1,11 @@
 #!/bin/bash
 
 export FRP_DIR=$HOME/Workspace/frp
+
+if [ ! -d $FRP_DIR ]; then
+    ./download-frp.sh
+fi
+
 # Create the systemd service file
 SERVICE_NAME="frpc"
 SERVICE_FILE="/etc/systemd/system/${SERVICE_NAME}.service"
@@ -64,6 +69,9 @@ includes = [ "$FRP_DIR/conf.d/*.toml" ]
 EOF
 
 cat << EOF > "$TOML_FILE_sub"
+# please make sure these name are:
+# unique in ALL clients
+# otherwise config overwritten triggered
 [[proxies]]
 name = "http"
 type = "http"
