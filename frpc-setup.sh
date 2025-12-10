@@ -1,9 +1,9 @@
 #!/bin/bash
 
 export FRP_DIR=$HOME/Workspace/frp
-export sudo="sudo"
+
 if [[ $EUID -ne 0 ]]; then
-   export sudo=""
+  export sudo="sudo"
 fi
 if [ ! -d $FRP_DIR ]; then
     ./download-frp.sh
