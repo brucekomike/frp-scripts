@@ -105,5 +105,5 @@ transport.useCompression = true
 EOF
 
 echo "Generated '$TOML_FILE' with a new authentication token."
-echo "Authentication Token: $GENERATED_TOKEN"
+echo "Authentication Token: $AUTH_TOKEN"
 echo "Please keep this token secure and use it in your frpc.toml client configuration."
