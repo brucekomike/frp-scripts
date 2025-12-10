@@ -1,16 +1,18 @@
 #!/bin/bash
 
 export FRP_DIR=$HOME/Workspace/frp
-
+export sudo="sudo"
+if [[ $EUID -ne 0 ]]; then
+   export sudo=""
+fi
 if [ ! -d $FRP_DIR ]; then
     ./download-frp.sh
 fi
-
 # Create the systemd service file
 SERVICE_NAME="frpc"
 SERVICE_FILE="/etc/systemd/system/${SERVICE_NAME}.service"
 echo "Creating systemd service file: $SERVICE_FILE"
-cat << EOF | sudo tee $SERVICE_FILE &> /dev/null
+cat << EOF | $sudo tee $SERVICE_FILE &> /dev/null
 [Unit]
 Description = frp server
 After = network.target syslog.target
@@ -29,10 +31,10 @@ EOF
 
 # Reload systemd daemon, enable and start the service
 echo "Reloading systemd daemon..."
-sudo systemctl daemon-reload
+$sudo systemctl daemon-reload
 
 echo "Enabling $SERVICE_NAME service to start on boot..."
-sudo systemctl enable "$SERVICE_NAME"
+$sudo systemctl enable "$SERVICE_NAME"
 echo "Service creation complete. "
 echo "You can start service by"
 echo "systemctl start $SERVICE_NAME"
