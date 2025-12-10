@@ -98,7 +98,6 @@ type = "tcp"
 localIP = "127.0.0.1"
 localPort = 22
 remotePort = 22222
-customDomains = ["your-domain.local"]
 transport.useEncryption = true
 transport.useCompression = true
 
